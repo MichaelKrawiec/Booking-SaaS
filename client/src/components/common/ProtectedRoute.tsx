@@ -1,15 +1,17 @@
+import { Navigate } from 'react-router-dom'
+
 interface Props {
   children: React.ReactNode
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-  // TODO: replace with real auth check when auth is built
-  const isAuthenticated = false
+  const token = localStorage.getItem('token')
 
-  if (isAuthenticated) {
-    return <>{children}</>
+  if (!token) {
+    return <Navigate to="/login" />
   }
-  return <div>You must be logged in to view this page.</div>
+
+  return <>{children}</>
 }
 
 export default ProtectedRoute
